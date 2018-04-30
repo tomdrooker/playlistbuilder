@@ -43,6 +43,22 @@ export class App extends Component {
         id: 2
       }]
     };
+    this.addTrack = this.addTrack.bind(this);
+  }
+
+  addTrack(track) {
+    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
+    } else {
+      this.setState({
+        playlistTracks: {
+          name: track.name,
+          artist: track.artist,
+          album: track.album,
+          id: track.id
+        },
+      })
+    }
   }
 
   render() {
@@ -52,9 +68,8 @@ export class App extends Component {
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} />
-            <Playlist playlistTitle={this.state.playlistTitle}
-             playlistTracks={this.state.playlistTracks}/>
+            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} isRemoval={false}/>
+            <Playlist playlistTitle={this.state.playlistTitle} playlistTracks={this.state.playlistTracks}/>
           </div>
         </div>
       </div>
