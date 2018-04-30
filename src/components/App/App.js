@@ -28,6 +28,19 @@ export class App extends Component {
         artist: 'Talk About It',
         album: 'I\'m Listening',
         id: 3
+      }],
+      playlistTitle: 'Great Playlist',
+      playlistTracks: [{
+        name: 'Paperweight',
+        artist: 'So Heavy',
+        album: 'Bearing Down On Me',
+        id: 1
+      },
+      {
+        name: 'Lamplight',
+        artist: 'Bulb',
+        album: 'Bright',
+        id: 2
       }]
     };
   }
@@ -40,7 +53,8 @@ export class App extends Component {
           <SearchBar />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} />
-            <Playlist />
+            <Playlist playlistTitle={this.state.playlistTitle}
+             playlistTracks={this.state.playlistTracks}/>
           </div>
         </div>
       </div>
