@@ -29,7 +29,7 @@ export class App extends Component {
         album: 'I\'m Listening',
         id: 3
       }],
-      playlistTitle: 'Great Playlist',
+      playlistTitle: 'New playlist',
       playlistTracks: [{
         name: 'Paperweight',
         artist: 'So Heavy',
@@ -45,6 +45,7 @@ export class App extends Component {
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistTitle = this.updatePlaylistTitle.bind(this);
   }
 
   addTrack(track) {
@@ -64,6 +65,11 @@ export class App extends Component {
     this.setState({playlistTracks: tracks});
   }
 
+  updatePlaylistTitle(newTitle) {
+    this.setState({playlistTitle: newTitle});
+    console.log(this.state.playlistTitle);
+  }
+
   render() {
     return (
       <div>
@@ -72,7 +78,7 @@ export class App extends Component {
           <SearchBar />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} isRemoval={false}/>
-            <Playlist playlistTitle={this.state.playlistTitle} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack}/>
+            <Playlist playlistTitle={this.state.playlistTitle} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onChange={this.updatePlaylistTitle}/>
           </div>
         </div>
       </div>
