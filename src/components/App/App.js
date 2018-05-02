@@ -15,18 +15,21 @@ export class App extends Component {
         name: 'My Favourite Song',
         artist: 'The Greatest Band',
         album: 'We So Great',
+        uri: 'spotify:track:17Yq72h0p15OhCbZ5lJ5gd',
         id: 1
       },
       {
         name: 'Check This',
         artist: 'The Chequers',
         album: 'Get Me My Cheque',
+        uri: 'spotify:track:6KBYefIoo7KydImq1uUQlL',
         id: 2
       },
       {
         name: 'Put The Radio On Instead',
         artist: 'Talk About It',
         album: 'I\'m Listening',
+        uri: 'spotify:track:2Yl4OmDby9iitgNWZPwxkd',
         id: 3
       }],
       playlistTitle: 'New playlist',
@@ -34,18 +37,22 @@ export class App extends Component {
         name: 'Paperweight',
         artist: 'So Heavy',
         album: 'Bearing Down On Me',
+        uri: 'spotify:track:7p2ewixAShLpjDZrnzZK7c',
         id: 1
       },
       {
         name: 'Lamplight',
         artist: 'Bulb',
         album: 'Bright',
+        uri: 'spotify:track:2qcG0nZ6S3zZV0UrkY5nFo',
         id: 2
       }]
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistTitle = this.updatePlaylistTitle.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
 
   addTrack(track) {
@@ -67,7 +74,15 @@ export class App extends Component {
 
   updatePlaylistTitle(newTitle) {
     this.setState({playlistTitle: newTitle});
-    console.log(this.state.playlistTitle);
+  }
+
+  savePlaylist() {
+    let tracks = this.state.playlistTracks;
+    let uriArray = tracks.map(track => track.uri);
+  }
+
+  search(term) {
+    console.log(term);
   }
 
   render() {
@@ -75,10 +90,12 @@ export class App extends Component {
       <div>
         <h1>Playlist<span className="highlight">Builder</span></h1>
         <div className="App">
-          <SearchBar />
+          <SearchBar onSearch={this.search}/>
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} isRemoval={false}/>
-            <Playlist playlistTitle={this.state.playlistTitle} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onChange={this.updatePlaylistTitle}/>
+            <Playlist playlistTitle={this.state.playlistTitle} playlistTracks={this.state.playlistTracks}
+            onRemove={this.removeTrack} onChange={this.updatePlaylistTitle}
+            onSave={this.savePlaylist}/>
           </div>
         </div>
       </div>
