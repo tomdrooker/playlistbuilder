@@ -1,6 +1,6 @@
 let accessToken;
 let expiresIn;
-const clientId = '';
+const clientId = 'ec2529858fd546ce87efaf7af22d7a75';
 const redirectUri = 'http://localhost:3000/';
 const responseType = 'token';
 
@@ -17,7 +17,7 @@ export const Spotify = {
       window.setTimeout(() => accessToken = '', expiresIn * 1000);
       window.history.pushState('Access Token', null, '/');
     } else if (!window.location.href.match('/access_token=([^&]*)/')) {
-      window.location.assign(Spotify.authorizeUrl);
+      window.location.assign(Spotify.authorizeUrl);    
     }
   },
 
@@ -27,13 +27,7 @@ export const Spotify = {
     }).then(response => {
         return response.json();
       }).then(jsonResponse => {
-        return jsonResponse.track.map(track => ({
-          id: track.id,
-          name: track.name,
-          artist: track.artists[0].name,
-          album: track.album.name,
-          uri: track.uri
-        }));
+        console.log(jsonResponse);
     })
   }
 };
