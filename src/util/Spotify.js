@@ -1,5 +1,4 @@
 let accessToken;
-let expiresIn;
 const clientId = '';
 const redirectUri = 'http://localhost:3000/';
 const responseType = 'token';
@@ -11,15 +10,20 @@ export const Spotify = {
   getAccessToken() {
     if (accessToken) {
       return accessToken;
-    } else if (window.location.href.match(/access_token=([^&]*)/, /expires_in=([^&]*)/)) {
-      accessToken = window.location.href.match(/access_token=([^&]*)/);
-      expiresIn = window.location.href.match(/expires_in=([^&]*)/);
+    }
+
+    const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
+    const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
+
+    if (accessTokenMatch && expiresInMatch) {
+      accessToken = accessTokenMatch[1];
+      const expiresIn = Number(expiresInMatch[1]);
       window.setTimeout(() => accessToken = '', expiresIn * 1000);
       window.history.pushState('Access Token', null, '/');
-    } else if (!window.location.href.match(/access_token=([^&]*)/)) {
-      window.location.assign(Spotify.authorizeUrl);
-      accessToken = window.location.href.match(/access_token=([^&]*)/);
-      expiresIn = window.location.href.match(/expires_in=([^&]*)/);
+      return accessToken;
+    } else {
+      const accessUrl = 'https://accounts.spotify.com/authorize' + '/?client_id=' + clientId + '&response_type=' + responseType + '&redirect_uri=' + redirectUri;
+      window.location = accessUrl;
     }
   },
 
@@ -31,13 +35,13 @@ export const Spotify = {
         return response.json();
       }).then(jsonResponse => {
         console.log(jsonResponse);
-        return jsonResponse.tracks.map(track => ({
-          id: track.id,
-          name: track.name,
-          artist: track.artists[0].name,
-          album: track.album.name,
-          uri: track.uri
-          }));
-    })
-  }
+        return jsonResponse.tracks.items.map(track => ({
+            id: track.id,
+            name: track.name,
+            artist: track.artists[0].name,
+            album: track.album.name,
+            uri: track.uri
+        }));
+      })
+    }
 };

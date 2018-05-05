@@ -10,27 +10,7 @@ export class App extends Component {
     super(props);
 
     this.state = {
-      searchResults: [{
-        name: 'My Favourite Song',
-        artist: 'The Greatest Band',
-        album: 'We So Great',
-        uri: 'spotify:track:17Yq72h0p15OhCbZ5lJ5gd',
-        id: 1
-      },
-      {
-        name: 'Check This',
-        artist: 'The Chequers',
-        album: 'Get Me My Cheque',
-        uri: 'spotify:track:6KBYefIoo7KydImq1uUQlL',
-        id: 2
-      },
-      {
-        name: 'Put The Radio On Instead',
-        artist: 'Talk About It',
-        album: 'I\'m Listening',
-        uri: 'spotify:track:2Yl4OmDby9iitgNWZPwxkd',
-        id: 3
-      }],
+      searchResults: [],
       playlistTitle: 'New playlist',
       playlistTracks: [{
         name: 'Paperweight',
@@ -82,8 +62,9 @@ export class App extends Component {
 
   search(term) {
     Spotify.search(term).then(track => {
+      console.log(track);
       this.setState({
-        track: track
+        searchResults: track
       });
     })
   }
