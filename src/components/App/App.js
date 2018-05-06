@@ -47,6 +47,10 @@ export class App extends Component {
     let uriArray = tracks.map(track => track.uri);
     let playlistTitle = this.state.playlistTitle;
     Spotify.savePlaylist(playlistTitle, uriArray);
+    this.setState({
+      playlistTracks: [],
+      playlistTitle: 'New playlist'      
+    });
   }
 
   search(term) {
