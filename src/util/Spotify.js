@@ -42,7 +42,7 @@ export const Spotify = {
             album: track.album.name,
             uri: track.uri
         }));
-      })
+      });
     },
 
     savePlaylist(playlistTitle, uriArray) {
@@ -51,8 +51,8 @@ export const Spotify = {
       }
 
       const accessToken = Spotify.getAccessToken();
-      let userId;
       const headers = { Authorization: `Bearer ${accessToken}` };
+      let userId;
 
         return fetch('https://api.spotify.com/v1/me', {headers: headers})
         .then(response => response.json()
@@ -61,7 +61,7 @@ export const Spotify = {
           return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
             headers: headers,
             method: 'POST',
-            body: JSON.stringify({playlistTitle: playlistTitle})
+            body: JSON.stringify({name: playlistTitle})
           }).then(response => response.json()
           ).then(jsonResponse => {
             console.log(jsonResponse);
