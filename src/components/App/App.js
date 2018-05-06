@@ -12,20 +12,7 @@ export class App extends Component {
     this.state = {
       searchResults: [],
       playlistTitle: 'New playlist',
-      playlistTracks: [{
-        name: 'Paperweight',
-        artist: 'So Heavy',
-        album: 'Bearing Down On Me',
-        uri: 'spotify:track:7p2ewixAShLpjDZrnzZK7c',
-        id: 1
-      },
-      {
-        name: 'Lamplight',
-        artist: 'Bulb',
-        album: 'Bright',
-        uri: 'spotify:track:2qcG0nZ6S3zZV0UrkY5nFo',
-        id: 2
-      }]
+      playlistTracks: []
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -58,6 +45,8 @@ export class App extends Component {
   savePlaylist() {
     let tracks = this.state.playlistTracks;
     let uriArray = tracks.map(track => track.uri);
+    let playlistTitle = this.state.playlistTitle;
+    Spotify.savePlaylist(playlistTitle, uriArray);
   }
 
   search(term) {
