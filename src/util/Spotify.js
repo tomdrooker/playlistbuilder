@@ -1,5 +1,5 @@
 const clientId = '';
-const redirectUri = 'http://tomrooker_playlistbuilder.surge.sh/'; // Have to add this to your accepted Spotify redirect URIs on the Spotify API.
+const redirectUri = 'http://localhost:3000/'; // http://tomrooker_playlistbuilder.surge.sh/
 let accessToken;
 
 export const Spotify = {
