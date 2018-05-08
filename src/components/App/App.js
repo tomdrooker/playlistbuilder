@@ -49,7 +49,7 @@ export class App extends Component {
     Spotify.savePlaylist(playlistTitle, uriArray);
     this.setState({
       playlistTracks: [],
-      playlistTitle: 'New playlist'      
+      playlistTitle: 'New playlist'
     });
   }
 
