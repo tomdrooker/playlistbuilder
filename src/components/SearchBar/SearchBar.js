@@ -1,39 +1,33 @@
 import React from 'react';
 import './SearchBar.css';
+import { Spotify } from '../../util/Spotify';
 
 export class SearchBar extends React.Component {
   constructor(props) {
     super(props);
+    this.login = this.login.bind(this);
     this.search = this.search.bind(this);
-    this.searchPrevious = this.searchPrevious.bind(this);
-    this.searchPreviousUsingKey = this.searchPreviousUsingKey.bind(this);
     this.handleTermChange = this.handleTermChange.bind(this);
     this.searchUsingKey = this.searchUsingKey.bind(this);
     this.state = {
-      term: ''
+      term: '',
+      loggedIn: false
     }
   }
 
   search() {
     this.props.onSearch(this.state.term);
-  }
-
-  searchPrevious() {
-    let searchTerm = localStorage.getItem('searchTerm');
-    this.props.onSearch(searchTerm);
-  }
-
-  searchPreviousUsingKey(event) {
-   let searchTerm = localStorage.getItem('searchTerm');
-
-    if (event.key == 'Enter') {
-      this.props.onSearch(searchTerm);
-    }
+    this.setState({
+      loggedIn: true
+    })
   }
 
   searchUsingKey(event) {
     if (event.key == 'Enter') {
       this.props.onSearch(this.state.term);
+      this.setState({
+        loggedIn: 1
+      })
     }
   }
 
@@ -41,23 +35,21 @@ export class SearchBar extends React.Component {
     this.setState({
       term: e.target.value
     });
-    localStorage.setItem('searchTerm', e.target.value);
   }
 
-  recallTerm(e) {
-    let searchTerm = localStorage.getItem('searchTerm');
-    e.target.value = searchTerm;
+  login() {
+    Spotify.getAccessToken();
   }
 
   render() {
-    let accessTokenMatch = window.location.href.match('access_token');
+    let loginCount = this.state.loginCount;
+    const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
 
-    if (accessTokenMatch) {
+    if (!this.state.loggedIn && !accessTokenMatch) {
       return (
-        <div className="SearchBar">
-          <input onFocus={this.recallTerm} onKeyDown={this.searchPreviousUsingKey} placeholder="Enter a song, album or artist" />
-          <a onClick={this.searchPrevious}>SEARCH</a>
-        </div>
+      <div className="SearchBar">
+        <a onClick={this.login}>LOG IN</a>
+      </div>
       )
     } else {
       return (
@@ -67,6 +59,5 @@ export class SearchBar extends React.Component {
         </div>
       )
     }
-
   }
 };

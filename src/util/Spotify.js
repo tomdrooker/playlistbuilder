@@ -1,5 +1,5 @@
-const clientId = '';
-const redirectUri = 'http://localhost:3000/'; // http://tomrooker_playlistbuilder.surge.sh/
+const clientId = 'ec2529858fd546ce87efaf7af22d7a75';
+const redirectUri = 'http://tomrooker_playlistbuilderv1.surge.sh/'; // http://tomrooker_playlistbuilder.surge.sh/ http://localhost:3000/
 let accessToken;
 
 export const Spotify = {
